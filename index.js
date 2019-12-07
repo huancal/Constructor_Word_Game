@@ -29,7 +29,7 @@ function gameLogic() {
 
         computerWord = new Word(randomWord);
 
-        requiredNewWord = false;
+        requireNewWord = false;
     }
 
     var wordComplete = [];
@@ -60,7 +60,7 @@ function gameLogic() {
                     var wordCheckArr = [];
 
                     computerWord.userGuess(input.userinput);
-                    computerWord.array.forEach(wordCheck);
+                    computerWord.objArray.forEach(wordCheck);
                     if (wordCheckArr.join("") === wordComplete.join("")) {
                         console.log("\nIncorrect!\n");
 
@@ -71,7 +71,7 @@ function gameLogic() {
                         console.log("\nCorrect!\n");
                         correctLetters.push(input.userinput);
                     }
-                    computerWord.log();
+                    computerWord();
 
                     console.log("Guesses Left:" + guessLeft + "\n");
                     console.log("Letters Guessed:" + incorretLetters.join(" ") + "\n");
