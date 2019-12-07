@@ -1,4 +1,4 @@
-var Word = require('./lib/word');
+var Word = require('./word');
 var inquirer = require('inquirer');
 
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
