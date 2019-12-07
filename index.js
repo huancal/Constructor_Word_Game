@@ -1,12 +1,14 @@
-var inquirer = require('inquirer')
-var Word = require('./lib/word')
+var Word = require('./lib/word');
+var inquirer = require('inquirer');
 
-var wordArray = ['avengers', 'thanksgiving', 'christmas'];
-var letterArray = ['abcdefghijklmnopqrstuvwxyz'];
+var letterArray = "abcdefghijklmnopqrstuvwxyz";
+
+var Superheroes = ["avengers", "batman", "superman"];
+
 
 // selects random word from wordArray
-var randomIndex = Math.floor(Math.random() * wordArray.length)
-var randomWord = wordArray[randomIndex];
+var randomIndex = Math.floor(Math.random() * Superheroes.length)
+var randomWord = Superheroes[randomIndex];
 
 // passing random word through constructor
 var computerWord = new Word(randomWord);
@@ -22,8 +24,8 @@ var guessLeft = 10;
 
 function gameLogic() {
     if (requireNewWord) {
-        var randomIndex = Math.floor(Math.random() * wordArray.length)
-        var randomWord = wordArray[randomIndex];
+        var randomIndex = Math.floor(Math.random() * Superheroes.length)
+        var randomWord = Superheroes[randomIndex];
 
         computerWord = new Word(randomWord);
 
@@ -31,7 +33,7 @@ function gameLogic() {
     }
 
     var wordComplete = [];
-    computerWord.array.forEach(completeCheck);
+    computerWord.objArray.forEach(completeCheck);
 
     if (wordComplete.includes(false)) {
         inquirer.prompt([{
@@ -83,7 +85,7 @@ function gameLogic() {
                     }
 
                     function wordCheck(key) {
-                        wordCheck.push(key.guessed);
+                        wordCheckArray.push(key.guessed);
                     }
                 }
             }
