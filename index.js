@@ -1,54 +1,48 @@
-// var game = require('./lib/game')
-
-// // Initialize a new Game object
-// var game = new Game();
-
-// // Start playing
-// game.play();
-
-const inquirer = require('inquirer')
-const Word = require('./word')
+var inquirer = require('inquirer')
+var Word = require('./lib/word')
 
 var wordArray = ['avengers', 'thanksgiving', 'christmas'];
-
 var letterArray = ['abcdefghijklmnopqrstuvwxyz'];
 
+// selects random word from wordArray
 var randomIndex = Math.floor(Math.random() * wordArray.length)
 var randomWord = wordArray[randomIndex];
 
+// passing random word through constructor
 var computerWord = new Word(randomWord);
 
 var requireNewWord = false;
+
+//array for letters guessd by user 
 var incorretLetters = [];
 var correctLetters = [];
 
 var guessLeft = 10;
 
+
 function gameLogic() {
-    if (requiredNewWord) {
+    if (requireNewWord) {
         var randomIndex = Math.floor(Math.random() * wordArray.length)
         var randomWord = wordArray[randomIndex];
 
         computerWord = new Word(randomWord);
 
         requiredNewWord = false;
-
     }
 
     var wordComplete = [];
+    computerWord.array.forEach(completeCheck);
 
     if (wordComplete.includes(false)) {
         inquirer.prompt([{
-                type: "input",
-                message: 'select a letter from A to Z',
-                name: "userinput"
-            }
-
-        ]).then(function (input) {
-            if (!letterArray.includes(input.userinput) ||
-                input.userinput.length > 1) {
-
-            } {
+            type: "input",
+            message: 'select a letter from A to Z',
+            name: "userinput"
+        }]).then(function (input) {
+            if (
+                !letterArray.includes(input.userinput) ||
+                input.userinput.length > 1
+            ) {
                 console.log("\nTry again!\n");
                 gameLogic();
             } else {
@@ -61,10 +55,11 @@ function gameLogic() {
                     gameLogic();
 
                 } else {
-                    var wordCheck = [];
+                    var wordCheckArr = [];
+
                     computerWord.userGuess(input.userinput);
                     computerWord.array.forEach(wordCheck);
-                    if (wordCheck.join("") === wordComplete.join("")) {
+                    if (wordCheckArr.join("") === wordComplete.join("")) {
                         console.log("\nIncorrect!\n");
 
                         incorretLetters.push(input.userinput);
@@ -74,7 +69,7 @@ function gameLogic() {
                         console.log("\nCorrect!\n");
                         correctLetters.push(input.userinput);
                     }
-                    computerWord();
+                    computerWord.log();
 
                     console.log("Guesses Left:" + guessLeft + "\n");
                     console.log("Letters Guessed:" + incorretLetters.join(" ") + "\n");
@@ -84,25 +79,24 @@ function gameLogic() {
 
                     } else {
                         console.log("You lose, try again!\n");
-
+                        restartGame();
                     }
 
                     function wordCheck(key) {
                         wordCheck.push(key.guessed);
                     }
-
                 }
             }
         });
     } else {
         console.log("You win!\n");
+        restartGame();
 
     }
 
     function completeCheck(key) {
         wordComplete.push(key.guessed);
     }
-
 }
 
 function restartGame() {
@@ -111,7 +105,6 @@ function restartGame() {
         message: "What would you like to do next?",
         choices: ["Play Again", "Quit"],
         name: "restart"
-
     }]).then(function (input) {
         if (input.restart === "Play Again") {
             requireNewWord = true;
@@ -122,7 +115,6 @@ function restartGame() {
         } else {
             return;
         }
-
     });
 }
 
